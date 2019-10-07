@@ -5,7 +5,6 @@ import PersonAdd from './PersonAdd'
 import Nav from './Nav'
 import './styles/App.css'
 import './skeleton.css'
-import uuid from'uuid4'
 
 class App extends Component {
   state = {
@@ -71,7 +70,7 @@ class App extends Component {
 
   saveNewPerson = (newPerson) => {
     const newState = JSON.parse(JSON.stringify(this.state))
-    newPerson.id = uuid()
+    newPerson.id = Math.floor(Math.random() * 999999);
     newState.people.push(newPerson)
     newState.view = 'PersonList'
     newState.selectedPerson = undefined
