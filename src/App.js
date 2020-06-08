@@ -5,6 +5,8 @@ import PersonAdd from './PersonAdd'
 import Nav from './Nav'
 import './styles/App.css'
 import './skeleton.css'
+import {connect} from 'react-redux'
+
 
 class App extends Component {
   state = {
@@ -12,7 +14,6 @@ class App extends Component {
       {firstName: 'Margaret', lastName: 'Hamilton', id: '81d6ff6c-10f4-4db0-88f2-1ebf789b7779'},
       {firstName: 'Donald', lastName: 'Knuth', id: 'f515b8de-5916-47db-9fa8-75efe4a5ebb2'}
     ],
-    view: 'PersonList',
     selectedPerson: undefined
   }
 
@@ -79,10 +80,10 @@ class App extends Component {
 
   render() {
     let currentView
-    if (this.state.view === 'PersonList') {
+    if (this.props.view === 'PersonList') {
       currentView =
         <PersonList people={this.state.people} goToPersonEdit={this.goToPersonEdit} goToPersonAdd={this.goToPersonAdd}/>
-    } else if (this.state.view === 'PersonAdd') {
+    } else if (this.props.view === 'PersonAdd') {
       currentView = <PersonAdd goHome={this.goHome} saveNewPerson={this.saveNewPerson}/>
     } else {
       currentView = <PersonEdit selectedPerson={this.state.selectedPerson}
@@ -100,4 +101,6 @@ class App extends Component {
   }
 }
 
-export default App
+const mapStateToProps = (state) => ({ view: state.view });
+
+export default connect(mapStateToProps)(App);

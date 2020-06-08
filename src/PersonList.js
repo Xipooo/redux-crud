@@ -1,6 +1,8 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
+import { connect } from 'react-redux';
+import { setViewAction } from './actions';
 
-class PersonList extends Component {
+export class PersonList extends Component {
 
   render() {
     return (
@@ -8,9 +10,9 @@ class PersonList extends Component {
         <ul className="PersonList">
           {this.props.people.map((person) =>
             <li key={person.id}
-                onClick={() => this.props.goToPersonEdit(person)}>{person.firstName} {person.lastName}</li>)}
+              onClick={() => this.props.goToPersonEdit(person)}>{person.firstName} {person.lastName}</li>)}
         </ul>
-        <button className="button-primary" onClick={() => this.props.goToPersonAdd()}>
+        <button className="button-primary" onClick={() => this.props.setView('PersonAdd')}>
           Add a Person
         </button>
       </div>
@@ -18,4 +20,9 @@ class PersonList extends Component {
   }
 }
 
-export default PersonList
+const mapStateToProps = state => ({ people: state.people });
+const mapDispatchToProps = dispatch => ({
+  setView: (view) => dispatch(setViewAction(view))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(PersonList);
